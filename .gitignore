@@ -1,0 +1,11 @@
+example/
+test
+*.symvers
+compile_commands.json
+*.order
+test_watchpoint
+*.ko
+*.mod
+*.mod.c
+*.mod.o
+*.o
