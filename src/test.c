@@ -1,38 +1,34 @@
-#include <signal.h>
+
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-volatile int *test_address;
-
-void signal_handler(int signum) {
-  printf("Caught signal %d\n", signum);
-  exit(signum);
-}
+#include <unistd.h>
 
 int main() {
-  signal(SIGSEGV, signal_handler);
+  int fd;
+  void *test_address;
+  unsigned long addr;
 
-  // Allocate memory
   test_address = malloc(sizeof(int));
   if (!test_address) {
     perror("malloc");
-    return 1;
+    return -1;
   }
 
-  // Print the address for reference
-  printf("Allocated memory at address: %p\n", (void *)test_address);
+  *(int *)test_address = 42;
+  addr = (unsigned long)test_address;
 
-  // Write to the test_address to trigger the watchpoint
-  *test_address = 42;
+  fd = open("/sys/kernel/watchpoint/watch_address", O_WRONLY);
+  if (fd < 0) {
+    perror("open");
+    return -1;
+  }
 
-  printf("Value at test_address: %d\n", *test_address);
+  printf("%lx\n", addr);
+  close(fd);
   getchar();
-  *test_address = 6;
-  printf("Value at test_address: %d\n", *test_address);
-  // Free allocated memory
-  getchar();
-  free((void *)test_address);
+  *(int *)test_address = 6; // This should trigger the hardware breakpoint
 
+  free(test_address);
   return 0;
 }

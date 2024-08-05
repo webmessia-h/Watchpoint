@@ -1,1 +1,0 @@
-savedcmd_/home/webmessia-h/projects/Kernel-Module/src/Module.symvers :=  scripts/mod/modpost -M  -a    -N  -o /home/webmessia-h/projects/Kernel-Module/src/Module.symvers -n -T /home/webmessia-h/projects/Kernel-Module/src/modules.order -i Module.symvers -e 

@@ -1,0 +1,4 @@
+make -C /lib/modules/6.10.2-arch1-1/build M=/home/webmessia-h/projects/Kernel-Module/src modules
+make[1]: Entering directory '/usr/lib/modules/6.10.2-arch1-1/build'
+  CC [M]  /home/webmessia-h/projects/Kernel-Module/src/watchpoint.o
+make[1]: Leaving directory '/usr/lib/modules/6.10.2-arch1-1/build'
