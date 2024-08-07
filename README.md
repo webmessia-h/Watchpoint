@@ -20,6 +20,10 @@
 - Yocto build environment for qemux86 or **_native_** x86_64 Linux.
 
 ## Installation
+**Clone the repo:**
+```sh
+git clone https://github.com/webmessia-h/watchpoint-ko.git
+```
 
 > [!CAUTION]
 >
