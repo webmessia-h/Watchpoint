@@ -15,7 +15,7 @@
 #include <linux/sysfs.h>
 #include <linux/uaccess.h>
 
-#define HW_BREAKPOINT_LEN HW_BREAKPOINT_LEN_8
+#define HW_BREAKPOINT_LEN HW_BREAKPOINT_LEN_4
 
 /*
  * on x86 it can be 1,2,4 | on x86_64 can be 1,2,4,8

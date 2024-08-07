@@ -1,14 +1,15 @@
-# watchpoint.bb
 SUMMARY = "Watchpoint Kernel Module"
 DESCRIPTION = "A kernel module that sets a watchpoint on a specified memory address."
-LICENSE = "GPLv2"
-SRC_URI = "file://watchpoint.c"
+LICENSE = "GPL-3.0-or-later"
+LIC_FILES_CHKSUM = "file://COPYING;md5=1ebbd3e34237af26da5dc08a4e440464"
+
+SRC_URI = "file://watchpoint.c file://Makefile file://COPYING"
+
 S = "${WORKDIR}"
 
 inherit module
 
-EXTRA_OEMAKE = ""
-EXTRA_OEMAKE_class-target = 'KDIR="${STAGING_KERNEL_DIR}"'
+EXTRA_OEMAKE = "KERNEL_SRC=${STAGING_KERNEL_DIR} KBUILD_EXTMOD=${S}"
 
 do_compile() {
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
@@ -20,4 +21,4 @@ do_install() {
     install -m 0644 ${S}/watchpoint.ko ${D}${base_libdir}/modules/${KERNEL_VERSION}/extra/
 }
 
-FILES_${PN} = "${base_libdir}/modules/${KERNEL_VERSION}/extra/watchpoint.ko"
+FILES_${PN} += "${base_libdir}/modules/${KERNEL_VERSION}/extra/watchpoint.ko"
