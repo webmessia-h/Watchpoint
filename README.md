@@ -5,8 +5,8 @@
 
 ## Description
 
-This Linux kernel module sets a watchpoint on a specified memory address.
-When the memory address is accessed (either read or write), the module's callbacks are called, and a backtrace is printed.
+#### This Linux kernel module sets a watchpoint on a specified memory address.
+#### When the memory address is accessed (either read or write), the module's callbacks are called, and a backtrace is printed.
 
 ## Features
 
@@ -84,10 +84,21 @@ make # bear -- make
 sudo insmod watchpoint.ko watch_address="0xYOUR_ADDRESS"
 ```
 
-**To see logs, use: `sudo dmesg`, I prefer to first run it with `-c` flag to clear the logs,
-and then with `-wH` flag so it dynamically prints everything to terminal.**
-
-![LOGS](assets/benchmark/test.png)
+>[!TIP]
+>To see logs, use: `sudo dmesg`, I prefer to first run it with `-c` flag to clear the logs,
+>and then with `-wH` flag so it dynamically prints everything to terminal.
+## Testing:
+>[!IMPORTANT]
+>There is `src/test.c` file which allocates memory on heap and prints the address, you should:
+>```sh
+> gcc -o test test.c
+> ./test
+>echo '0xPRINTED_ADDRESS' | tee/sys/kernel/watchpoint/watch_address # that may require `sudo` privileges
+>```
+>And press any key in terminal instance where `./test` is running, it waits on `getchar()` function call, so you can see both read and write operations.
+>
+>### Below is a test case on native x86_64 machine:
+>![LOGS](assets/test.png)
 
 ## Usage
 
@@ -98,7 +109,9 @@ You can set the watchpoint address through the **sysfs** interface:
 echo 0xYourMemoryAddress > /sys/kernel/watchpoint/watch_address
 ```
 
-> [!IMPORTANT] > **However there is check mechanism, you better ensure the address is correctly aligned and within a valid range.**
+> [!IMPORTANT]
+>
+> **However there is check mechanism, you better ensure the address is correctly aligned and within a valid range.**
 
 ## Example
 
@@ -111,7 +124,7 @@ insmod watchpoint.ko watch_address=0xffff88013c36a000
 **Or dynamically change the address:**
 
 ```sh
-echo 0xffff88013c36a000 > /sys/kernel/watchpoint/watch_address
+echo '0xffff88013c36a000' > /sys/kernel/watchpoint/watch_address
 ```
 
 ## License
