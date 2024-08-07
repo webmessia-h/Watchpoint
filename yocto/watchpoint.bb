@@ -3,7 +3,7 @@ DESCRIPTION = "A kernel module that sets a watchpoint on a specified memory addr
 LICENSE = "GPL-3.0-or-later"
 LIC_FILES_CHKSUM = "file://COPYING;md5=1ebbd3e34237af26da5dc08a4e440464"
 
-SRC_URI = "file://watchpoint.c file://Makefile file://COPYING"
+SRC_URI = "file://src/watchpoint.c file://Makefile file://COPYING"
 
 S = "${WORKDIR}"
 
