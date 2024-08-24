@@ -30,14 +30,7 @@
  *#endif
 */
 
-DEFINE_PER_CPU(unsigned long *, cpu_dr0);
-DEFINE_PER_CPU(unsigned long *, cpu_dr1);
-DEFINE_PER_CPU(unsigned long *, cpu_dr2);
-DEFINE_PER_CPU(unsigned long *, cpu_dr3);
-DEFINE_PER_CPU(unsigned long *, cpu_dr6);
-
 static unsigned long watch_address = 0;
-// static unsigned long test_var = 0;
 module_param(watch_address, ulong, 0644);
 MODULE_PARM_DESC(watch_address, "Memory address to set the watchpoint");
 
@@ -108,6 +101,11 @@ static struct perf_event *set_watchpoint(int cpu) {
     printk("No available hardware breakpoint slots");
     return NULL;
   }
+  if (watch_address) {
+    if (watch_address % HW_BREAKPOINT_LEN != 0) {
+      pr_err("Watch address is not aligned correctly.\n");
+      return -EINVAL;
+    }
   pr_info("Setting watchpoint\n");
   print_debug_registers(); // Print registers before setting the watchpoint
   struct perf_event_attr attr = {};
