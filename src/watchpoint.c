@@ -1,5 +1,3 @@
-#include "linux/hw_breakpoint.h"
-#include "linux/perf_event.h"
 #include <asm/processor.h>
 #include <asm/ptrace.h>
 #include <linux/cpumask.h>
@@ -14,6 +12,7 @@
 #include <linux/ptrace.h>
 #include <linux/sysfs.h>
 #include <linux/uaccess.h>
+#include <linux/perf_event.h>
 
 #define HW_BREAKPOINT_LEN HW_BREAKPOINT_LEN_4
 
@@ -179,17 +178,6 @@ static int __init watchpoint_init(void) {
     return ret;
   }
 
-  /*if (watch_address) {
-    if (watch_address % HW_BREAKPOINT_LEN != 0) {
-      pr_err("Watch address is not aligned correctly.\n");
-      return -EINVAL;
-    }
-    set_watchpoint(get_av_cpu(0));
-  }*/
-  /* trigger the watchpoint
-  test_var = 42;
-  unsigned long check_read = test_var;
-  */
   return 0;
 }
 
