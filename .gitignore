@@ -1,4 +1,3 @@
-example/
 test
 *.symvers
 compile_commands.json
@@ -9,5 +8,4 @@ test_watchpoint
 *.mod.c
 *.mod.o
 *.o
-.*
 
